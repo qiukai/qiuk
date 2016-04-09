@@ -11,7 +11,6 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="cache-control" content="no-cache">
 </head>
-<body onload="location.href = 'qiukk/test'">
-<h2>Hello World!</h2>
+<body onload="location.href = '/index'">
 </body>
 </html>

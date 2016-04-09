@@ -1,6 +1,6 @@
 package top.qiuk.service;
 
-public interface UserService {
+public interface UserService<T> {
 
-	void save();
+	void save(T t);
 }

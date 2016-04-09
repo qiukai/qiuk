@@ -1,7 +1,10 @@
 package top.qiuk.util;
 
-import top.qiuk.po.User;
-
+/**
+ * bioa
+ * @author Administrator
+ *
+ */
 public class ObjectToTableName {
 	
 	/**
@@ -19,8 +22,8 @@ public class ObjectToTableName {
 	 * @param o 目标对象
 	 * @return
 	 */
-	public static String getTableName(Object o){
-		return getTableName(o, DEFAULT_PREFIX, DEFAULT_SUFFIX);
+	public static <T> String getTableName(Class<T> clazz){
+		return getTableName(clazz, DEFAULT_PREFIX, DEFAULT_SUFFIX);
 	}
 	
 	/**
@@ -30,8 +33,8 @@ public class ObjectToTableName {
 	 * @param suffix 表名后缀 如果不加请使用“”
 	 * @return
 	 */
-	public static String getTableName(Object o,String prefix,String suffix){
-		String simpleName = o.getClass().getSimpleName();
+	public static <T> String getTableName(Class<T> clazz,String prefix,String suffix){
+		String simpleName = clazz.getSimpleName();
 		char[] charArray = simpleName.toCharArray();
 		StringBuilder sb = new StringBuilder();
 		sb.append(prefix);
@@ -47,8 +50,8 @@ public class ObjectToTableName {
 	}
 	
 	public static void main(String[] args) {
-		User user = new User();
-		String tableName = ObjectToTableName.getTableName(user);
-		System.out.println(tableName);
+//		User user = new User();
+//		String tableName = ObjectToTableName.getTableName(user);
+//		System.out.println(tableName);
 	}
 }
