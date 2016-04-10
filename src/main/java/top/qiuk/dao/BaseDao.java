@@ -1,9 +1,19 @@
 package top.qiuk.dao;
 
 import java.util.List;
-import java.util.Map;
 
-public interface BaseDao<T> {
+public interface BaseDao<T, E> {
 
-	List<T> selectList(Map<String, Object> map);
+	int countByExample(E example);
+
+	int deleteByPrimaryKey(String id);
+
+	int insert(T record);
+
+	List<T> selectByExample(E example);
+	
+	T selectByPrimaryKey(String id);
+
+	int updateByPrimaryKeySelective(T record);
+
 }

@@ -1459,8 +1459,8 @@ h1 small, h2 small, h3 small, h4 small, h5 small, h6 small, .h1 small,
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
-	margin-top: 20px;
-	margin-bottom: 10px;
+	margin-top: 0px;
+	margin-bottom: 0px;
 }
 
 h1 small, .h1 small, h2 small, .h2 small, h3 small, .h3 small, h1 .small,
@@ -1485,6 +1485,7 @@ h1, .h1 {
 h2, .h2 {
 	font-size: 30px;
 	text-align: center;
+	margin-bottom: 10px;
 }
 
 h3, .h3 {

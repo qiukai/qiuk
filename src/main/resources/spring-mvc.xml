@@ -10,7 +10,7 @@
             http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd">
     <context:component-scan base-package="top.qiuk.controller" />
     <aop:aspectj-autoproxy proxy-target-class="true" />
-	<mvc:annotation-driven></mvc:annotation-driven>
+    <mvc:annotation-driven/>
     <!-- 视图解释类 -->
     <!-- Default ViewResolver -->
     <bean id="viewResolver"
@@ -28,4 +28,5 @@
         <property name="defaultEncoding" value="utf-8" />
     </bean>
     <mvc:default-servlet-handler/>
+	<mvc:resources mapping="/dist/**" location="/dist/" />
 </beans>

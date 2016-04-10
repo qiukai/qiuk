@@ -1,6 +1,6 @@
 package top.qiuk.service;
 
-public interface UserService<T> {
+public interface UserService<T> extends BaseService<T> {
 
-	void save(T t);
+	T selectByEmail(String email);
 }

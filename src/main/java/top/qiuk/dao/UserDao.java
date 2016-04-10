@@ -1,4 +1,4 @@
 package top.qiuk.dao;
 
-public interface UserDao<T> extends BaseDao<T> {
+public interface UserDao<T,E> extends BaseDao<T, E> {
 }

@@ -3,6 +3,7 @@
 	<name>qiuk</name>
 	<comment></comment>
 	<projects>
+		<project>QKUtils</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>
