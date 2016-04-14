@@ -10,7 +10,7 @@ public class ObjectToTableName {
 	/**
 	 * 默认前缀
 	 */
-	private static final String DEFAULT_PREFIX = "t";
+	private static final String DEFAULT_PREFIX = "log";
 	
 	/**
 	 * 默认后缀
@@ -19,7 +19,7 @@ public class ObjectToTableName {
 
 	/**
 	 * 将对象转换成表明 (使用默认前缀和后缀)
-	 * @param o 目标对象
+	 * @param clazz 目标对象
 	 * @return
 	 */
 	public static <T> String getTableName(Class<T> clazz){
@@ -28,14 +28,24 @@ public class ObjectToTableName {
 	
 	/**
 	 * 将对象转换成表明
-	 * @param o 目标对象
+	 * @param clazz 目标对象
 	 * @param prefix 表名前缀 如果不加请使用“”
 	 * @param suffix 表名后缀 如果不加请使用“”
 	 * @return
 	 */
 	public static <T> String getTableName(Class<T> clazz,String prefix,String suffix){
-		String simpleName = clazz.getSimpleName();
-		char[] charArray = simpleName.toCharArray();
+		return getTableName(clazz.getSimpleName(), prefix, suffix);
+	}
+	
+	/**
+	 * 将对象转换成表明
+	 * @param objectName 类名字
+	 * @param prefix 表名前缀 如果不加请使用“”
+	 * @param suffix 表名后缀 如果不加请使用“”
+	 * @return
+	 */
+	public static <T> String getTableName(String objectName ,String prefix,String suffix){
+		char[] charArray = objectName.toCharArray();
 		StringBuilder sb = new StringBuilder();
 		sb.append(prefix);
 		for (char c : charArray) {

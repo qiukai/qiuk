@@ -22,7 +22,7 @@ public class UserServiceImpl<T> extends BaseServiceImpl<T,UserRepository> implem
 	public void setBaseDao(){
 		baseDao = userDao;
 	}
-
+	
 	@Override
 	public T selectByEmail(String email) {
 		

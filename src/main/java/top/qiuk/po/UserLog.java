@@ -3,7 +3,7 @@ package top.qiuk.po;
 import java.io.Serializable;
 import java.util.Date;
 
-public class User implements Serializable {
+public class UserLog implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String id;
@@ -18,11 +18,14 @@ public class User implements Serializable {
 
 	private Date createTime;
 
-	public User() {
+	private String primaryId;
+
+	public UserLog() {
 		super();
 	}
 
-	public User(String id, String email, String nickName, String password, Integer status, Date createTime) {
+	public UserLog(String id, String email, String nickName, String password, Integer status, Date createTime,
+			String primaryId) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -30,6 +33,7 @@ public class User implements Serializable {
 		this.password = password;
 		this.status = status;
 		this.createTime = createTime;
+		this.primaryId = primaryId;
 	}
 
 	public String getId() {
@@ -80,9 +84,17 @@ public class User implements Serializable {
 		this.createTime = createTime;
 	}
 
+	public String getPrimaryId() {
+		return primaryId;
+	}
+
+	public void setPrimaryId(String primaryId) {
+		this.primaryId = primaryId;
+	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", email=" + email + ", nickName=" + nickName + ", password=" + password + ", status="
-				+ status + ", createTime=" + createTime + "]";
+		return "UserLog [id=" + id + ", email=" + email + ", nickName=" + nickName + ", password=" + password
+				+ ", status=" + status + ", createTime=" + createTime + ", primaryId=" + primaryId + "]";
 	}
 }
