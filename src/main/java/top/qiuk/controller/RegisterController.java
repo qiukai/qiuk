@@ -7,7 +7,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import top.qiuk.aop.SaveLog;
 import top.qiuk.constant.ParameterConstant;
 import top.qiuk.po.User;
 import top.qiuk.service.UserService;
@@ -34,7 +33,6 @@ public class RegisterController {
 	 * @param password 密码
 	 * @return
 	 */
-//	@SaveLog
 	@RequestMapping("/go")
 	public ModelAndView go(ModelAndView mav,String email,String nickName,String password) {
 		

@@ -42,4 +42,15 @@ public class UserServiceImpl<T> extends BaseServiceImpl<T,UserRepository> implem
 		return list.get(0);
 	}
 
+	@Override
+	public T login(String email, String password) {
+		UserRepository userRepository = new UserRepository();
+		userRepository.or().andEmailEqualTo(email).andPasswordEqualTo(password);
+		List<T> list = userDao.selectByExample(userRepository);
+		if (ListUtil.isNull(list)) {
+			return null;
+		}
+		return list.get(0);
+	}
+
 }

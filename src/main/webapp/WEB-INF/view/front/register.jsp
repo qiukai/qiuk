@@ -5,7 +5,7 @@
 </head>
 <body>
 	<a href="">
-		<button type="button" class="btn btn-lg btn-default" id="back">
+		<button type="button" class="btn btn-default" id="back">
   			<span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span> 返回
 		</button>
 	</a>

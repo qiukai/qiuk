@@ -1,5 +1,7 @@
 package top.qiuk.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,12 +29,27 @@ public class LoginController {
 	 */
 	private static final String SECRET = "0987654321!@#$%^&*()qiuk!@#$%^&*()0987654321";
 
+	private static final String E_MAIL = "email";
+
+	private static final String USER = "user";
+
 	@Autowired
 	UserService<User> userService;
 
-	@RequestMapping("/login/{userName}/{password}")
-	public String login(@PathVariable String userName, @PathVariable String password) {
-		return null;
+	/**
+	 * 登录
+	 * @param password 密码
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("/go/{password}")
+	public String login(@PathVariable String password, HttpSession session) {
+		String email = (String) session.getAttribute(E_MAIL);
+		User user = userService.login(email, password);
+		if (null != user) {
+			session.setAttribute(USER, user);
+		}
+		return "redirect:/";
 	}
 
 	/**
@@ -42,14 +59,17 @@ public class LoginController {
 	 */
 	@ResponseBody
 	@RequestMapping("/secret/{status}")
-	public String getSecret(@RequestParam String email, @PathVariable String status) {
+	public String getSecret(@RequestParam String email, @PathVariable String status, HttpSession session) {
 
 		if (StringUtil.isNull(status)) {
 			return "error";
 		}
 		User user = userService.selectByEmail(email);
 		if ("login".equals(status) && null != user) {
-			return MD5.makeMd5(email + SECRET);
+			String secret = MD5.makeMd5(email + SECRET);
+			session.setAttribute(email, secret);
+			session.setAttribute(E_MAIL, email);
+			return secret;
 		}
 		if ("register".equals(status) && null == user) {
 			return MD5.makeMd5(email + SECRET);

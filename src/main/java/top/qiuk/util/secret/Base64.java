@@ -27,4 +27,13 @@ public class Base64 {
 		return (new BASE64Encoder()).encodeBuffer(key);
 	}
 
+	public static void main(String[] args) {
+		try {
+			String string = Base64.encryptBASE64("sdf".getBytes());
+			System.out.println(string);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 }
