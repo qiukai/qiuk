@@ -8,7 +8,7 @@ public interface BaseDao<T, E> {
 
 	int deleteByPrimaryKey(String id);
 
-	int insert(T record);
+	int insert(Object object);
 
 	List<T> selectByExample(E example);
 	

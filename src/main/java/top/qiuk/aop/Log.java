@@ -9,7 +9,8 @@ import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
 
-import top.qiuk.util.ObjectToTableName;
+import top.qiuk.dao.BaseDao;
+import top.qiuk.service.impl.BaseServiceImpl;
 import top.qiuk.util.StringUtil;
 
 /**
@@ -34,31 +35,31 @@ public class Log {
 	@Before("save()")
 	public void save(JoinPoint joinPoint) throws Exception {
 		Object[] objects = joinPoint.getArgs();
-
 		Class<? extends Object> class1 = objects[0].getClass();
 		String name = class1.getName();
 		Class<?> class2 = Class.forName(name + "Log");
-		System.out.println(class2.getName());
 		Object object = class2.newInstance();
-
 		Field[] fields = class1.getDeclaredFields();
-
 		for (Field field : fields) {
 			field.setAccessible(true);
 			if ("id".equals(field.getName())) {
 				Method method = class2.getMethod("setPrimaryId", String.class);
 				method.invoke(object, field.get(objects[0]));
-			} else if ("serialVersionUID".equals(field.getName())) {
 				continue;
-			} else {
-				String name2 = field.getName();
-				String substring = name2.substring(1);
-				String upperCase = name2.substring(0, 1).toUpperCase();
-				Method method = class2.getMethod("set" + upperCase + substring,field.getType());
-				method.invoke(object, field.get(objects[0]));
 			}
+			if ("serialVersionUID".equals(field.getName())) {
+				continue;
+			}
+			String name2 = field.getName();
+			String substring = name2.substring(1);
+			String upperCase = name2.substring(0, 1).toUpperCase();
+			Method method = class2.getMethod("set" + upperCase + substring, field.getType());
+			method.invoke(object, field.get(objects[0]));
 		}
-		System.out.println(object);
+		object.getClass().getMethod("setId", String.class).invoke(object, StringUtil.getUUID());
+		BaseServiceImpl<?,?> baseServiceImpl = (BaseServiceImpl<?,?>) joinPoint.getTarget();
+		BaseDao<?, ?> baseLogDao = baseServiceImpl.getBaseLogDao();
+		baseLogDao.insert(object);
 	}
 
 	@Before("update()")

@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import top.qiuk.dao.UserDao;
+import top.qiuk.dao.UserLogDao;
+import top.qiuk.po.UserLog;
+import top.qiuk.po.UserLogRepository;
 import top.qiuk.po.UserRepository;
 import top.qiuk.service.UserService;
 import top.qiuk.util.ListUtil;
@@ -18,9 +21,13 @@ public class UserServiceImpl<T> extends BaseServiceImpl<T,UserRepository> implem
 	@Autowired
 	UserDao<T,UserRepository> userDao;
 	
+	@Autowired
+	UserLogDao<UserLog,UserLogRepository> userLogDao;
+	
 	@PostConstruct
 	public void setBaseDao(){
 		baseDao = userDao;
+		setBaseLogDao(userLogDao);
 	}
 	
 	@Override
