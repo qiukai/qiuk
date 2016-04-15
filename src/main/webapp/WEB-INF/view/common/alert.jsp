@@ -12,6 +12,7 @@
 				<h4 class="modal-title" id="gridSystemModalLabel">qiuk 提示</h4>
 			</div>
 			<div class="modal-body" style="text-align: center;">
+			<input type="hidden" id="error_messge" value="${error}">
 				<span id="message_id" style="color: green;">${message}</span>
 				<span id="error_id" style="color: red;">${error}</span>
 			</div>
@@ -31,4 +32,10 @@
 		$("#message_id").text(message);
 		$("#alert_id").modal("show");
 	}
+	$(function(){
+		var error_messge = $("#error_messge").val();
+		if(!StringIsNull(error_messge)){
+			Aerror(error_messge);
+		}
+	});
 </script>

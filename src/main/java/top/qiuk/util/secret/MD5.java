@@ -94,7 +94,7 @@ public final class MD5 {
 	}
 	
 	public static void main(String[] args) {
-		String md5 = getMD5("123456");
-		System.out.println(md5);
+		String md5 = getMD5("qiukai9305@qq.com"+"0987654321!@#$%^&*()qiuk!@#$%^&*()0987654321");
+		System.out.println(getMD5("qiukai"+md5));
 	}
 }

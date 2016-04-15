@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import top.qiuk.po.User;
 import top.qiuk.service.UserService;
@@ -38,18 +39,26 @@ public class LoginController {
 
 	/**
 	 * 登录
-	 * @param password 密码
+	 * 
+	 * @param password
+	 *            密码
 	 * @param session
 	 * @return
 	 */
-	@RequestMapping("/go/{password}")
-	public String login(@PathVariable String password, HttpSession session) {
+	@RequestMapping("/go")
+	public String login(@RequestParam String password, HttpSession session, RedirectAttributes ra) {
 		String email = (String) session.getAttribute(E_MAIL);
+		if (StringUtil.isNull(email)) {
+			ra.addFlashAttribute("error", "用户名或密码错误");
+			return "redirect:/login/to";
+		}
 		User user = userService.login(email, password);
 		if (null != user) {
 			session.setAttribute(USER, user);
+			return "redirect:/";
 		}
-		return "redirect:/";
+		ra.addFlashAttribute("error", "用户名或密码错误");
+		return "redirect:/login/to";
 	}
 
 	/**
@@ -74,7 +83,7 @@ public class LoginController {
 		if ("register".equals(status) && null == user) {
 			return MD5.makeMd5(email + SECRET);
 		}
-		return "errorMessage";
+		return "error";
 	}
 
 	/**

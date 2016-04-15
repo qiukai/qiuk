@@ -35,10 +35,9 @@ public class RegisterController {
 	 */
 	@RequestMapping("/go")
 	public ModelAndView go(ModelAndView mav,String email,String nickName,String password) {
-		
 		User user = new User(StringUtil.getUUID(), email, nickName, password, ParameterConstant.UserStatus.NORMAL, new Date());
 		userService.insert(user);
-		
+		mav.setViewName("redirect:/");
 		return mav;
 	}
 

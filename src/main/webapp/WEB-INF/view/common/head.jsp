@@ -19,3 +19,4 @@
 <link rel="stylesheet" type="text/css" href="dist/css/bootstrap-theme.css">
 <script type="text/javascript" src="dist/js/jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="dist/js/bootstrap.js"></script>
+<script type="text/javascript" src="dist/js/base.js"></script>

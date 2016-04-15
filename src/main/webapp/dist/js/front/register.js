@@ -44,7 +44,6 @@ $(function() {
 		$.post("/login/secret/register",{"email":email},function(data){
 			var md5 = MD5(password + data);
 			$("input[name=password]").val(md5);
-			console.log(md5);
 			$("#form_id").submit();
 		},"text");
 	});
