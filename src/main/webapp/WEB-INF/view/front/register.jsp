@@ -11,7 +11,7 @@
 	</a>
 	<div class="container">
 		<form class="form-signin" action="register/go" method="post" id="form_id">
-			<h2>注&nbsp;&nbsp;&nbsp;&nbsp;册</h2>
+			<h2 style="text-align: center;">注&nbsp;&nbsp;&nbsp;&nbsp;册</h2>
 			<input type="email" class="form-control" name="email" placeholder="请输入邮箱" required>
 			<input type="text" class="form-control" name="nickName" placeholder="请输入昵称" required>
 			<input type="password" class="form-control" name="password" placeholder="请输入密码" required>

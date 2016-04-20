@@ -20,4 +20,14 @@ public class ParameterConstant {
 		public static final int EXCEPTION = 1;
 		
 	}
+	
+	/**
+	 * 用户名key值
+	 */
+	public static final String E_MAIL = "email";
+
+	/**
+	 * session用户key值
+	 */
+	public static final String USER = "user";
 }

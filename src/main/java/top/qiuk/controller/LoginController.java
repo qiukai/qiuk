@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import top.qiuk.constant.ParameterConstant;
 import top.qiuk.po.User;
 import top.qiuk.service.UserService;
 import top.qiuk.util.StringUtil;
@@ -30,10 +31,6 @@ public class LoginController {
 	 */
 	private static final String SECRET = "0987654321!@#$%^&*()qiuk!@#$%^&*()0987654321";
 
-	private static final String E_MAIL = "email";
-
-	private static final String USER = "user";
-
 	@Autowired
 	UserService<User> userService;
 
@@ -47,14 +44,14 @@ public class LoginController {
 	 */
 	@RequestMapping("/go")
 	public String login(@RequestParam String password, HttpSession session, RedirectAttributes ra) {
-		String email = (String) session.getAttribute(E_MAIL);
+		String email = (String) session.getAttribute(ParameterConstant.E_MAIL);
 		if (StringUtil.isNull(email)) {
 			ra.addFlashAttribute("error", "用户名或密码错误");
 			return "redirect:/login/to";
 		}
 		User user = userService.login(email, password);
 		if (null != user) {
-			session.setAttribute(USER, user);
+			session.setAttribute(ParameterConstant.USER, user);
 			return "redirect:/";
 		}
 		ra.addFlashAttribute("error", "用户名或密码错误");
@@ -77,7 +74,7 @@ public class LoginController {
 		if ("login".equals(status) && null != user) {
 			String secret = MD5.makeMd5(email + SECRET);
 			session.setAttribute(email, secret);
-			session.setAttribute(E_MAIL, email);
+			session.setAttribute(ParameterConstant.E_MAIL, email);
 			return secret;
 		}
 		if ("register".equals(status) && null == user) {

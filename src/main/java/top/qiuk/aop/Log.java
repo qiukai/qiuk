@@ -3,13 +3,21 @@ package top.qiuk.aop;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
+import top.qiuk.constant.LogTypeEnum;
+import top.qiuk.constant.ParameterConstant;
 import top.qiuk.dao.BaseDao;
+import top.qiuk.po.User;
 import top.qiuk.service.impl.BaseServiceImpl;
 import top.qiuk.util.StringUtil;
 
@@ -56,7 +64,19 @@ public class Log {
 			Method method = class2.getMethod("set" + upperCase + substring, field.getType());
 			method.invoke(object, field.get(objects[0]));
 		}
-		object.getClass().getMethod("setId", String.class).invoke(object, StringUtil.getUUID());
+		Class<? extends Object> class3 = object.getClass();
+		
+		class3.getMethod("setId", String.class).invoke(object, StringUtil.getUUID());
+		class3.getMethod("setLogType", Integer.class).invoke(object, LogTypeEnum.INSERT.getValue());
+		
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		HttpSession session = request.getSession();
+		if (null != session) {
+			class3.getMethod("setLogId", String.class).invoke(object, ((User)session.getAttribute(ParameterConstant.USER)).getId());
+		} else {
+			class3.getMethod("setLogId", String.class).invoke(object, "");
+		}
+		
 		BaseServiceImpl<?,?> baseServiceImpl = (BaseServiceImpl<?,?>) joinPoint.getTarget();
 		BaseDao<?, ?> baseLogDao = baseServiceImpl.getBaseLogDao();
 		baseLogDao.insert(object);

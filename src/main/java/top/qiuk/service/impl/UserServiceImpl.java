@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import top.qiuk.aop.SaveLog;
 import top.qiuk.dao.UserDao;
 import top.qiuk.dao.UserLogDao;
 import top.qiuk.po.UserLog;
@@ -26,7 +27,6 @@ public class UserServiceImpl<T> extends BaseServiceImpl<T,UserRepository> implem
 	
 	@PostConstruct
 	public void setBaseDao(){
-		baseDao = userDao;
 		setBaseLogDao(userLogDao);
 	}
 	
@@ -51,6 +51,30 @@ public class UserServiceImpl<T> extends BaseServiceImpl<T,UserRepository> implem
 			return null;
 		}
 		return list.get(0);
+	}
+
+	@Override
+	public int deleteByPrimaryKey(String id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	@SaveLog
+	public int insert(T record) {
+		return userDao.insert(record);
+	}
+
+	@Override
+	public T selectByPrimaryKey(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int updateByPrimaryKeySelective(T record) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }
