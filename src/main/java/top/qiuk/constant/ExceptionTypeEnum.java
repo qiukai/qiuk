@@ -1,10 +1,13 @@
 package top.qiuk.constant;
 
-import top.qiuk.exception.UtilRuntimeException;
+import top.qiuk.exception.GlobalRuntimeException;
 
 public enum ExceptionTypeEnum {
 
-	EXCEPTION_TYPE_ENUM("异常类型枚举异常", 0), DATE("日期错误", 1), FILE_NAME("文件不存在", 2), DATE_FORMATTER("日期格式错误", 3);
+	EXCEPTION_TYPE_ENUM("异常类型枚举异常", 0),
+	DATE("日期错误", 1),
+	FILE_NAME("文件不存在", 2),
+	DATE_FORMATTER("日期格式错误", 3);
 
 	private String message;
 
@@ -32,7 +35,7 @@ public enum ExceptionTypeEnum {
 				return ete.getValue();
 			}
 		}
-		throw new UtilRuntimeException(ExceptionTypeEnum.EXCEPTION_TYPE_ENUM);
+		throw new GlobalRuntimeException(ExceptionTypeEnum.EXCEPTION_TYPE_ENUM);
 	}
 
 	public static int getKey(String value) {
@@ -41,7 +44,7 @@ public enum ExceptionTypeEnum {
 				return ete.getKey();
 			}
 		}
-		throw new UtilRuntimeException(ExceptionTypeEnum.EXCEPTION_TYPE_ENUM);
+		throw new GlobalRuntimeException(ExceptionTypeEnum.EXCEPTION_TYPE_ENUM);
 	}
 
 	public String toString() {

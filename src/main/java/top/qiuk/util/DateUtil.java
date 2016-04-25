@@ -7,7 +7,7 @@ import java.util.HashMap;
 
 import top.qiuk.constant.DateTypeEnum;
 import top.qiuk.constant.ExceptionTypeEnum;
-import top.qiuk.exception.UtilRuntimeException;
+import top.qiuk.exception.GlobalRuntimeException;
 
 /**
  * @author : qk Function: 日期的帮助类
@@ -31,7 +31,7 @@ public class DateUtil {
 			}
 			return formatter.format(date);
 		}
-		throw new UtilRuntimeException(ExceptionTypeEnum.DATE_FORMATTER, "日期转字符串错误！");
+		throw new GlobalRuntimeException(ExceptionTypeEnum.DATE_FORMATTER, "日期转字符串错误！");
 	}
 
 	/**
@@ -42,7 +42,7 @@ public class DateUtil {
 	 */
 	public static Date getDate(Object obj, DateTypeEnum pattern) {
 		if (obj == null) {
-			throw new UtilRuntimeException(ExceptionTypeEnum.DATE_FORMATTER, "目标对象为null");
+			throw new GlobalRuntimeException(ExceptionTypeEnum.DATE_FORMATTER, "目标对象为null");
 		}
 		if (obj instanceof String) {
 			try {
@@ -53,13 +53,13 @@ public class DateUtil {
 				}
 				return formatter.parse((String) obj);
 			} catch (ParseException e) {
-				throw new UtilRuntimeException(ExceptionTypeEnum.DATE_FORMATTER, obj.toString() + "目标对象无法转换成日期");
+				throw new GlobalRuntimeException(ExceptionTypeEnum.DATE_FORMATTER, obj.toString() + "目标对象无法转换成日期");
 			}
 		} else if (obj instanceof Date) {
 			return (Date) obj;
 		} else if (obj instanceof Long) {
 			return new Date(((Long) obj).longValue());
 		}
-		throw new UtilRuntimeException(ExceptionTypeEnum.DATE_FORMATTER, obj.toString() + "目标对象类型错误！");
+		throw new GlobalRuntimeException(ExceptionTypeEnum.DATE_FORMATTER, obj.toString() + "目标对象类型错误！");
 	}
 }

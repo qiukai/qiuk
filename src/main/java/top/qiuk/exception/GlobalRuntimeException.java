@@ -8,7 +8,7 @@ import top.qiuk.constant.ExceptionTypeEnum;
  * @author Administrator
  *
  */
-public class UtilRuntimeException extends RuntimeException {
+public class GlobalRuntimeException extends RuntimeException {
 
 	private static final long serialVersionUID = 1L;
 
@@ -16,14 +16,23 @@ public class UtilRuntimeException extends RuntimeException {
 
 	private String message;
 
-	public UtilRuntimeException(ExceptionTypeEnum exceptionTypeEnum) {
+	/**
+	 * @param exceptionTypeEnum
+	 *            错误类型
+	 */
+	public GlobalRuntimeException(ExceptionTypeEnum exceptionTypeEnum) {
 		code = exceptionTypeEnum.getKey();
 		message = exceptionTypeEnum.getValue();
 	}
 
-	public UtilRuntimeException(ExceptionTypeEnum exceptionTypeEnum, String string) {
+	/**
+	 * 
+	 * @param exceptionTypeEnum 错误类型
+	 * @param errorDescription 错误描述
+	 */
+	public GlobalRuntimeException(ExceptionTypeEnum exceptionTypeEnum, String errorDescription) {
 		code = exceptionTypeEnum.getKey();
-		message = exceptionTypeEnum.getValue() + ":" + string;
+		message = exceptionTypeEnum.getValue() + ":" + errorDescription;
 	}
 
 	public int getCode() {
@@ -40,5 +49,10 @@ public class UtilRuntimeException extends RuntimeException {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	@Override
+	public String toString() {
+		return "GlobalRuntimeException [code=" + code + ", message=" + message + "]";
 	}
 }
