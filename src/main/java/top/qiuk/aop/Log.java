@@ -28,6 +28,8 @@ import top.qiuk.util.StringUtil;
 @Aspect
 public class Log {
 
+	private static final String User = null;
+
 	@Pointcut("@annotation(top.qiuk.aop.SaveLog)")
 	public void save() {
 	}
@@ -41,7 +43,7 @@ public class Log {
 	}
 
 	@Before("save()")
-	public void save(JoinPoint joinPoint) throws Exception {
+	public void insert(JoinPoint joinPoint) throws Exception {
 		Object[] objects = joinPoint.getArgs();
 		Class<? extends Object> class1 = objects[0].getClass();
 		String name = class1.getName();
@@ -71,8 +73,9 @@ public class Log {
 		
 		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
 		HttpSession session = request.getSession();
-		if (null != session) {
-			class3.getMethod("setLogId", String.class).invoke(object, ((User)session.getAttribute(ParameterConstant.USER)).getId());
+		User user = (User)session.getAttribute(ParameterConstant.USER);
+		if (null != user) {
+			class3.getMethod("setLogId", String.class).invoke(object, user.getId());
 		} else {
 			class3.getMethod("setLogId", String.class).invoke(object, "");
 		}
