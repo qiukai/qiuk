@@ -28,8 +28,6 @@ import top.qiuk.util.StringUtil;
 @Aspect
 public class Log {
 
-	private static final String User = null;
-
 	@Pointcut("@annotation(top.qiuk.aop.SaveLog)")
 	public void save() {
 	}
@@ -44,6 +42,26 @@ public class Log {
 
 	@Before("save()")
 	public void insert(JoinPoint joinPoint) throws Exception {
+		addLog(joinPoint, LogTypeEnum.INSERT);
+	}
+
+	@Before("update()")
+	public void update(JoinPoint joinPoint) throws Exception {
+		addLog(joinPoint, LogTypeEnum.UPDATE);
+	}
+
+	@Before("delete()")
+	public void delete(JoinPoint joinPoint) throws Exception {
+		addLog(joinPoint, LogTypeEnum.DELETE);
+	}
+
+	/**
+	 * 对添加，修改，删除增加日志
+	 * @param joinPoint
+	 * @param logType
+	 * @throws Exception
+	 */
+	private void addLog(JoinPoint joinPoint, LogTypeEnum logType) throws Exception {
 		Object[] objects = joinPoint.getArgs();
 		Class<? extends Object> class1 = objects[0].getClass();
 		String name = class1.getName();
@@ -67,31 +85,23 @@ public class Log {
 			method.invoke(object, field.get(objects[0]));
 		}
 		Class<? extends Object> class3 = object.getClass();
-		
+
 		class3.getMethod("setId", String.class).invoke(object, StringUtil.getUUID());
-		class3.getMethod("setLogType", Integer.class).invoke(object, LogTypeEnum.INSERT.getValue());
-		
-		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
+		class3.getMethod("setLogType", Integer.class).invoke(object, logType.getValue());
+
+		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes())
+				.getRequest();
 		HttpSession session = request.getSession();
-		User user = (User)session.getAttribute(ParameterConstant.USER);
+		User user = (User) session.getAttribute(ParameterConstant.USER);
 		if (null != user) {
 			class3.getMethod("setLogId", String.class).invoke(object, user.getId());
 		} else {
 			class3.getMethod("setLogId", String.class).invoke(object, "");
 		}
-		
-		BaseServiceImpl<?,?> baseServiceImpl = (BaseServiceImpl<?,?>) joinPoint.getTarget();
+
+		BaseServiceImpl<?, ?> baseServiceImpl = (BaseServiceImpl<?, ?>) joinPoint.getTarget();
 		BaseDao<?, ?> baseLogDao = baseServiceImpl.getBaseLogDao();
 		baseLogDao.insert(object);
 	}
 
-	@Before("update()")
-	public void update(JoinPoint joinPoint) {
-		System.out.println("hello");
-	}
-
-	@Before("delete()")
-	public void delete(JoinPoint joinPoint) {
-		System.out.println("hello");
-	}
 }

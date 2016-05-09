@@ -14,7 +14,7 @@
 						class="icon-bar"></span> <span class="icon-bar"></span> <span
 						class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand" href="#">qiuk</a>
+				<a class="navbar-brand" href="#"><img alt="" src="/dist/images/graylogo.png" style="width: 65px; height: 50px; float: left; margin-left: 30px;"></a>
 			</div>
 			<div id="navbar" class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
