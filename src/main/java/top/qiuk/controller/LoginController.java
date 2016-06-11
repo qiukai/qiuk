@@ -1,5 +1,7 @@
 package top.qiuk.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +13,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import top.qiuk.constant.ParameterConstant;
+import top.qiuk.po.Token;
 import top.qiuk.po.User;
+import top.qiuk.service.TokenService;
 import top.qiuk.service.UserService;
+import top.qiuk.util.IP;
 import top.qiuk.util.StringUtil;
 import top.qiuk.util.secret.MD5;
 
@@ -34,6 +39,12 @@ public class LoginController {
 	@Autowired
 	UserService<User> userService;
 
+	@Autowired
+	TokenService tokenService;
+	
+	@Autowired
+	RegisterController registerController;
+
 	/**
 	 * 登录
 	 * 
@@ -43,15 +54,22 @@ public class LoginController {
 	 * @return
 	 */
 	@RequestMapping("/go")
-	public String login(@RequestParam String password, HttpSession session, RedirectAttributes ra) {
-		String email = (String) session.getAttribute(ParameterConstant.E_MAIL);
+	public String login(HttpServletRequest request, HttpServletResponse response, @RequestParam String password,
+			RedirectAttributes ra) {
+		
+		UserService<User> userService2 = registerController.userService;
+		System.err.println(userService2);
+		
+		String email = (String) request.getSession().getAttribute(ParameterConstant.E_MAIL);
 		if (StringUtil.isNull(email)) {
 			ra.addFlashAttribute("error", "用户名或密码错误");
 			return "redirect:/login/to";
 		}
 		User user = userService.login(email, password);
 		if (null != user) {
-			session.setAttribute(ParameterConstant.USER, user);
+			Token tokenPO = new Token(StringUtil.getUUID(), user.getId(), System.currentTimeMillis(), IP.getIP(request));
+			request.setAttribute("token", tokenPO);
+			tokenService.updateToken(request, response);
 			return "redirect:/";
 		}
 		ra.addFlashAttribute("error", "用户名或密码错误");

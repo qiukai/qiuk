@@ -22,6 +22,10 @@ public class ParameterConstant {
 	}
 	
 	/**
+	 * ip
+	 */
+	public static final String IP = "ip";
+	/**
 	 * 用户名key值
 	 */
 	public static final String E_MAIL = "email";

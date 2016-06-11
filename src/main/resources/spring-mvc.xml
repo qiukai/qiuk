@@ -30,4 +30,11 @@
     </bean>
     <mvc:default-servlet-handler/>
 	<mvc:resources mapping="/dist/**" location="/dist/" />
+	
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/**"/>
+			<bean class="top.qiuk.interceptor.LoginInterceptor"></bean>
+		</mvc:interceptor>
+	</mvc:interceptors>
 </beans>
