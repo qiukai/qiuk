@@ -1,19 +1,10 @@
 package top.qiuk.service.impl;
 
-import java.util.List;
-
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import top.qiuk.constant.ErrorTypeEnum;
 import top.qiuk.constant.ParameterConstant;
 import top.qiuk.dao.TokenDao;
 import top.qiuk.dao.UserDao;
-import top.qiuk.exception.GlobalRuntimeException;
 import top.qiuk.po.Token;
 import top.qiuk.po.TokenRepository;
 import top.qiuk.po.TokenRepository.Criteria;
@@ -24,19 +15,25 @@ import top.qiuk.util.IP;
 import top.qiuk.util.ListUtil;
 import top.qiuk.util.StringUtil;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
+
+/**
+ * 对token的操作
+ */
 @Service
 public class TokenServiceImpl implements TokenService {
-
-	@Autowired
-	UserDao<User, UserRepository> userDao;
-
-	@Autowired
-	TokenDao<Token, TokenRepository> tokenDao;
 
 	/**
 	 * token 超时时间！(30天)
 	 */
 	private static long TOKEN_OUT_TIME = 30L * 24L * 60L * 60L * 1000L;
+	@Autowired
+	UserDao<User, UserRepository> userDao;
+	@Autowired
+	TokenDao<Token, TokenRepository> tokenDao;
 
 	@Override
 	public boolean updateToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -51,19 +48,10 @@ public class TokenServiceImpl implements TokenService {
 			if ("token".equals(cookie.getName())) {
 				token = tokenDao.selectByPrimaryKey(cookie.getValue());
 
-				// 如果没有该token
-				if (null == token) {
-					throw new GlobalRuntimeException(ErrorTypeEnum.TOKEN_IS_NULL);
-				}
-
-				// 如果ip不对
-				if (!token.getIp().equals(IP.getIP(request))) {
-					throw new GlobalRuntimeException(ErrorTypeEnum.IP_IS_NULL);
-				}
-
-				// 如果token超时
-				if (System.currentTimeMillis() >= (token.getLoginTime() + TOKEN_OUT_TIME)) {
-					throw new GlobalRuntimeException(ErrorTypeEnum.TOKEN_OUT_TIME);
+				// 如果没有该token 如果ip不对 如果token超时
+				if (null == token || (!token.getIp().equals(IP.getIP(request))) || (System.currentTimeMillis() >= (token.getLoginTime() + TOKEN_OUT_TIME))) {
+					token = null;
+					break;
 				}
 
 				// 修改token值，并重新保存
@@ -79,11 +67,7 @@ public class TokenServiceImpl implements TokenService {
 			// 用request获取token（登录成功后，将保存token在request中）
 			token = (Token) request.getAttribute("token");
 			if (null == token) {
-				if ("/index".equals(request.getRequestURI())) {
-					return true;
-				} else {
-					return false;
-				}
+				return "/index".equals(request.getRequestURI());
 			} else {
 				addToken(token);
 			}
@@ -101,7 +85,6 @@ public class TokenServiceImpl implements TokenService {
 	}
 
 	private void addToken(Token token) {
-		System.err.println(token);
 		TokenRepository tokenRepository = new TokenRepository();
 		Criteria criteria = tokenRepository.createCriteria();
 		criteria.andIdEqualTo(token.getId());

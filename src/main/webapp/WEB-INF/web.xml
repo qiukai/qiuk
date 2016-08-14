@@ -44,32 +44,7 @@
 		<servlet-name>springServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
-	
-	<!-- 错误页面的配置 -->
-	<error-page>
-		<error-code>404</error-code>
-		<location>/WEB-INF/view/error/error404.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>400</error-code>
-		<location>/WEB-INF/view/error/error400.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>405</error-code>
-		<location>/WEB-INF/view/error/error405.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>403</error-code>
-		<location>/WEB-INF/view/error/error403.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>406</error-code>
-		<location>/WEB-INF/view/error/error406.jsp</location>
-	</error-page>
-	<error-page>
-		<error-code>500</error-code>
-		<location>/WEB-INF/view/error/error500.jsp</location>
-	</error-page>
+
 	
 	<session-config>
 		<session-timeout>1</session-timeout>
