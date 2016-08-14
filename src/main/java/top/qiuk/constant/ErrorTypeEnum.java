@@ -15,7 +15,12 @@ public enum ErrorTypeEnum {
 	/**
 	 * token 超时
 	 */
-	TOKEN_OUT_TIME(102, "请登录！");
+	TOKEN_OUT_TIME(102, "请登录！"),
+	
+	/**
+	 * 没找到页面
+	 */
+	URL_NOT_FROND(104,"没找到页面");
 	
 	
 

@@ -72,7 +72,7 @@
 	</error-page>
 	
 	<session-config>
-		<session-timeout>30</session-timeout>
+		<session-timeout>1</session-timeout>
 	</session-config>
 	<display-name>qiuk</display-name>
 	<welcome-file-list>

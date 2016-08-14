@@ -34,23 +34,19 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		
 		String requestURI = request.getRequestURI();
-		System.out.println(requestURI);
 		for (String uri : ignore) {
 			if (requestURI.contains(uri)) {
 				return true;
 			}
 		}
-
 		HttpSession session = request.getSession();
 		User user = (User) session.getAttribute(ParameterConstant.USER);
-		if (null == user || StringUtil.isNull(user.getId())) {
-			tokenService.updateToken(request, response);
+		if ((null == user || StringUtil.isNull(user.getId())) && tokenService.updateToken(request, response)) {
 			return true;
 		}
 		if (!IP.getIP(request).equals((String) session.getAttribute(ParameterConstant.IP))) {
 			throw new GlobalRuntimeException(ErrorTypeEnum.IP_IS_NULL);
 		}
-
 		return true;
 	}
 }

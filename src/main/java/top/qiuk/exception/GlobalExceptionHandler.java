@@ -14,7 +14,7 @@ public class GlobalExceptionHandler {
 	public ModelAndView ServiceExceptionHandler(Exception ex) {
 
 		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("error/error500");
+		modelAndView.setViewName("/dist/error500");
 		modelAndView.addObject("error", "出错了！");
 		if (ex instanceof GlobalRuntimeException) {
 			GlobalRuntimeException gre = (GlobalRuntimeException) ex;

@@ -10,4 +10,9 @@ public class IndexController {
 	public String toIndex() {
 		return "/front/index";
 	}
+	
+	@RequestMapping("/error404")
+	public String error(){
+		return "/dist/error404";
+	}
 }

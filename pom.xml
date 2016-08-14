@@ -10,13 +10,14 @@
 
 
 	<properties>
-		<org.springframework-version>4.1.2.RELEASE</org.springframework-version>
+		<org.springframework-version>4.3.2.RELEASE</org.springframework-version>
 		<org.slf4j-version>1.7.12</org.slf4j-version>
 		<cxf.version>2.2.3</cxf.version>
 		<jetty.version>7.6.8.v20121106</jetty.version>
 	</properties>
 
 	<dependencies>
+
 		<!-- spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -106,34 +107,6 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
-	<repositories>
-		<repository>
-			<id>nexus</id>
-			<name>local private nexus</name>
-			<url>http://maven.oschina.net/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</repository>
-	</repositories>
-	<pluginRepositories>
-		<pluginRepository>
-			<id>nexus</id>
-			<name>local private nexus</name>
-			<url>http://maven.oschina.net/content/groups/public/</url>
-			<releases>
-				<enabled>true</enabled>
-			</releases>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-		</pluginRepository>
-	</pluginRepositories>
-
 
 	<build>
 		<finalName>qiuk</finalName>

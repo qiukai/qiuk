@@ -4,44 +4,7 @@
 <link rel="stylesheet" type="text/css" href="dist/css/carousel.css">
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-fixed-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed"
-					data-toggle="collapse" data-target="#navbar" aria-expanded="false"
-					aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span> <span
-						class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a href="#"><img class="img-responsive" src="/dist/images/graylogo.png" style="height: 50px; float: left;"></a>
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li>
-						<form class="navbar-form">
-							<div class="form-group">
-								<input type="text" placeholder="请输入关键字" class="form-control"
-									style="width: 350px;">
-							</div>
-						</form>
-					</li>
-				</ul>
-				<c:if test="${sessionScope.user == null }">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/login/to">登录</a></li>
-						<li><a href="/register/to">注册</a></li>
-					</ul>
-				</c:if>
-				<c:if test="${sessionScope.user != null }">
-					<ul class="nav navbar-nav navbar-right">
-						<li><a href="/login/to">${sessionScope.user.nickName }</a></li>
-					</ul>
-				</c:if>
-			</div>
-		</div>
-	</nav>
-
+	<%@ include file="../common/nav.jsp"%>
 	<div class="container" style="margin-top: 70px;">
 		<div class="row row-offcanvas row-offcanvas-right">
 			<div class="col-xs-12 col-sm-9">

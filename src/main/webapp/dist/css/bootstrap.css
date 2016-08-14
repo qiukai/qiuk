@@ -3812,7 +3812,7 @@ tbody.collapse.in {
 	z-index: 1000;
 	display: none;
 	float: left;
-	min-width: 160px;
+	min-width: 110px;
 	padding: 5px 0;
 	margin: 2px 0 0;
 	font-size: 14px;
@@ -3848,6 +3848,7 @@ tbody.collapse.in {
 	line-height: 1.42857143;
 	color: #333;
 	white-space: nowrap;
+	
 }
 
 .dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus {

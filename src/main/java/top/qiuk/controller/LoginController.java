@@ -18,8 +18,8 @@ import top.qiuk.po.User;
 import top.qiuk.service.TokenService;
 import top.qiuk.service.UserService;
 import top.qiuk.util.IP;
+import top.qiuk.util.MD5;
 import top.qiuk.util.StringUtil;
-import top.qiuk.util.secret.MD5;
 
 /**
  * 登录
@@ -52,13 +52,11 @@ public class LoginController {
 	 *            密码
 	 * @param session
 	 * @return
+	 * @throws Exception 
 	 */
 	@RequestMapping("/go")
 	public String login(HttpServletRequest request, HttpServletResponse response, @RequestParam String password,
-			RedirectAttributes ra) {
-		
-		UserService<User> userService2 = registerController.userService;
-		System.err.println(userService2);
+			RedirectAttributes ra) throws Exception {
 		
 		String email = (String) request.getSession().getAttribute(ParameterConstant.E_MAIL);
 		if (StringUtil.isNull(email)) {

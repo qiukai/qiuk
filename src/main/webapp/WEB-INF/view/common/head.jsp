@@ -14,7 +14,7 @@
 <base href="<%=basePath%>">
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <title>qiuk</title>
-<link rel="shortcut icon" href="images/logo.ico" type="image/x-icon">
+<link rel="shortcut icon" href="dist/images/logo.ico" type="image/x-icon">
 <link rel="stylesheet" type="text/css" href="dist/css/bootstrap.css">
 <link rel="stylesheet" type="text/css" href="dist/css/bootstrap-theme.css">
 <link rel="stylesheet" type="text/css" href="dist/css/base.css">

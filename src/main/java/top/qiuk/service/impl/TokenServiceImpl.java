@@ -36,10 +36,10 @@ public class TokenServiceImpl implements TokenService {
 	/**
 	 * token 超时时间！(30天)
 	 */
-	private long TOKEN_OUT_TIME = 30L * 24L * 60L * 60L * 1000L;
+	private static long TOKEN_OUT_TIME = 30L * 24L * 60L * 60L * 1000L;
 
 	@Override
-	public void updateToken(HttpServletRequest request, HttpServletResponse response) throws GlobalRuntimeException {
+	public boolean updateToken(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
 		Token token = null;
 
@@ -55,31 +55,37 @@ public class TokenServiceImpl implements TokenService {
 				if (null == token) {
 					throw new GlobalRuntimeException(ErrorTypeEnum.TOKEN_IS_NULL);
 				}
-				
+
 				// 如果ip不对
 				if (!token.getIp().equals(IP.getIP(request))) {
 					throw new GlobalRuntimeException(ErrorTypeEnum.IP_IS_NULL);
 				}
-				
+
 				// 如果token超时
 				if (System.currentTimeMillis() >= (token.getLoginTime() + TOKEN_OUT_TIME)) {
 					throw new GlobalRuntimeException(ErrorTypeEnum.TOKEN_OUT_TIME);
 				}
-				
+
 				// 修改token值，并重新保存
 				token.setToken(StringUtil.getUUID());
 				addToken(token);
 				break;
 			}
 		}
-		
+
 		// 如果cookies中没有token
 		if (null == token) {
-			
+
 			// 用request获取token（登录成功后，将保存token在request中）
 			token = (Token) request.getAttribute("token");
 			if (null == token) {
-				throw new GlobalRuntimeException(ErrorTypeEnum.TOKEN_IS_NULL);
+				if ("/index".equals(request.getRequestURI())) {
+					return true;
+				} else {
+					return false;
+				}
+			} else {
+				addToken(token);
 			}
 		}
 
@@ -89,16 +95,19 @@ public class TokenServiceImpl implements TokenService {
 		request.getSession().setAttribute(ParameterConstant.IP, token.getIp());
 		Cookie cookie = new Cookie("token", token.getToken());
 		cookie.setPath("/index");
+		cookie.setMaxAge(60*60*24*30);
 		response.addCookie(cookie);
+		return true;
 	}
 
 	private void addToken(Token token) {
+		System.err.println(token);
 		TokenRepository tokenRepository = new TokenRepository();
 		Criteria criteria = tokenRepository.createCriteria();
 		criteria.andIdEqualTo(token.getId());
 		List<Token> list = tokenDao.selectByExample(tokenRepository);
 		if (!ListUtil.isNull(list)) {
-			tokenDao.deleteByPrimaryKey(token.getToken());
+			tokenDao.deleteByPrimaryKey(list.get(0).getToken());
 		}
 		tokenDao.insert(token);
 	}

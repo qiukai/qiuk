@@ -11,5 +11,5 @@ public interface TokenService {
 	 * @param response
 	 * @return
 	 */
-	void updateToken(HttpServletRequest request,HttpServletResponse response);
+	boolean updateToken(HttpServletRequest request,HttpServletResponse response) throws Exception;
 }
