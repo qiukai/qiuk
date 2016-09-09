@@ -1,11 +1,17 @@
 package top.qiuk.controller;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+import org.springframework.web.jsf.el.WebApplicationContextFacesELResolver;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import top.qiuk.constant.ParameterConstant;
 import top.qiuk.po.Token;
@@ -36,13 +42,10 @@ public class LoginController {
 	private static final String SECRET = "0987654321!@#$%^&*()qiuk!@#$%^&*()0987654321";
 
 	@Autowired
-	UserService<User> userService;
+	private UserService<User> userService;
 
 	@Autowired
-	TokenService tokenService;
-	
-	@Autowired
-	RegisterController registerController;
+	private TokenService tokenService;
 
 	/**
 	 * 登录
@@ -50,11 +53,12 @@ public class LoginController {
 	 * @param password
 	 *            密码
 	 * @return 网页地址
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	@RequestMapping("/go")
 	public String login(HttpServletRequest request, HttpServletResponse response, @RequestParam String password,
 			RedirectAttributes ra) throws Exception {
+		WebApplicationContext applicationContext = WebApplicationContextUtils.getWebApplicationContext(request.getSession().getServletContext());
 		
 		String email = (String) request.getSession().getAttribute(ParameterConstant.E_MAIL);
 		if (StringUtil.isNull(email)) {
@@ -63,8 +67,8 @@ public class LoginController {
 		}
 		User user = userService.login(email, password);
 		if (null != user) {
-			Token tokenPO = new Token(StringUtil.getUUID(), user.getId(), System.currentTimeMillis(), IP.getIP(request));
-			request.setAttribute("token", tokenPO);
+			Token token = new Token(StringUtil.getUUID(), user.getId(), System.currentTimeMillis(), IP.getIP(request));
+			request.setAttribute("token", token);
 			tokenService.updateToken(request, response);
 			return "redirect:/";
 		}

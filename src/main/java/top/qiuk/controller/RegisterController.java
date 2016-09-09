@@ -23,7 +23,7 @@ import top.qiuk.util.StringUtil;
 public class RegisterController {
 	
 	@Autowired
-	UserService<User> userService;
+	private UserService<User> userService;
 	
 	/**
 	 * 注册

@@ -44,7 +44,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			return true;
 		}
 		if (!IP.getIP(request).equals(session.getAttribute(ParameterConstant.IP))) {
-			throw new GlobalRuntimeException(ErrorTypeEnum.IP_IS_NULL);
+			tokenService.updateToken(request, response);
 		}
 		return true;
 	}
