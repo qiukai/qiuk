@@ -9,8 +9,8 @@
 		<div class="row row-offcanvas row-offcanvas-right">
 			<div class="col-xs-12 col-sm-9">
 				<div class="jumbotron">
-					<h1>你好，世界！</h1>
-					<p>你好，世界！</p>
+					<h1>欢迎来到qiuk博客！</h1>
+					<p>欢迎来到qiuk博客！！</p>
 				</div>
 				<div class="row">
 					<div class="col-xs-12 col-lg-12">
@@ -81,7 +81,7 @@
 				<!--/row-->
 			</div>
 
-			<div class="col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
+			<div class="pull-right col-xs-6 col-sm-3 sidebar-offcanvas" id="sidebar">
 				<div class="list-group">
 					<a href="#" class="list-group-item active">标签</a>
 					<a href="#" class="list-group-item">宫同学</a> 

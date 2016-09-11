@@ -78,7 +78,7 @@ public class TokenServiceImpl implements TokenService {
         request.getSession().setAttribute(ParameterConstant.USER, user);
         request.getSession().setAttribute(ParameterConstant.IP, token.getIp());
         Cookie cookie = new Cookie("token", token.getToken());
-        cookie.setPath("/index");
+        cookie.setPath("/");
         cookie.setMaxAge(60 * 60 * 24 * 30);
         response.addCookie(cookie);
         return true;
