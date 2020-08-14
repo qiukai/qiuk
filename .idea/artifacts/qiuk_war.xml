@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="qiuk:war">
-    <output-path>$PROJECT_DIR$/target</output-path>
-    <root id="archive" name="qiuk.war">
-      <element id="artifact" artifact-name="qiuk:war exploded" />
-    </root>
-  </artifact>
-</component>
